@@ -54,7 +54,7 @@ st.title("Streamlit Sidebar")
 selected_index = select_opt.index(user_opt)
 
 # 선택한 항목에 맞는 이미지 파일 지정
-folder = "D:/JBEDU/Python/VSCode/VSCode_Workspace/0613_AI/data/"
+folder = "0613_AI/data/"
 img_files = ["Vermeer.png", "Gogh.png", "Munch.png", "ShinYoonbok.png"]
 selected_img = img_files[selected_index]
 selected_img_file = Image.open(folder+selected_img)
