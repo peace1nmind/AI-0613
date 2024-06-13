@@ -22,23 +22,31 @@ import streamlit as st
 ### 사이드바
 st.sidebar.title("Side Bar")
 
-# 아이디 비밀번호
-st.sidebar.header("Text Input")
-
+# 세션 상태 초기화
 if 'login_status' not in st.session_state:
     st.session_state['login_status'] = ''
 
-with st.sidebar.form("Login"):
-    user_id = st.text_input("User ID", value='streamlit', max_chars=15)
-    user_pw = st.text_input("Password", value="1234", type="password")
-    submitted = st.form_submit_button("Login")
-    if submitted:
-        if (user_id == 'streamlit') & (user_pw == '1234'):
-            st.write("Login Success")
-            st.session_state['login_status'] = 'ok'
-        else:
-            st.write("Login Fail")
-            st.session_state['login_status'] = 'fail'
+# 로그인 상태 체크
+if st.session_state['login_status'] != 'ok':
+    # 로그인 폼
+    st.sidebar.header("Text Input")
+    with st.sidebar.form("Login"):
+        user_id = st.text_input("User ID", value='streamlit', max_chars=15)
+        user_pw = st.text_input("Password", value="1234", type="password")
+        submitted = st.form_submit_button("Login")
+        if submitted:
+            if (user_id == 'streamlit') & (user_pw == '1234'):
+                st.session_state['login_status'] = 'ok'
+                st.experimental_rerun()
+            else:
+                st.sidebar.error("Login Fail")
+else:
+    # 로그아웃 버튼
+    st.sidebar.header("Logout")
+    if st.sidebar.button("Logout"):
+        st.session_state['login_status'] = ''
+        st.experimental_rerun()
+
 
 # 이미지 선택
 st.sidebar.header("Select Box")
